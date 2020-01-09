@@ -25,12 +25,15 @@ export default class GifCard extends Component {
         if(this.state.data.length === 0) {
             return null;
         }else {
-            this.state.data.data.map( (element) => {
-            console.log(element)
-            return(<p>{element.url}</p>) 
-            }
-            )}
+            return (
+                this.state.data.data.map( (element) => {
+                console.log(element)
+                return(<img src={element.images.original.url} alt="animated"></img>) 
+                })
+            );
         }
+
+    }
 
 
     render() {
