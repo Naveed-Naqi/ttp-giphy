@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import API_KEY from '../keys'
+import StylishGifCard from "./StylishGifCard";
 
 export default class SearchField extends Component {
     constructor(props) {
@@ -17,7 +19,7 @@ export default class SearchField extends Component {
     }
 
     handleClick = () => {
-        axios.get("http://api.giphy.com/v1/gifs/search?q=" + this.state.search +"&api_key=9Q9MsWs3RkTosk6qfAWA9lvzrrd7e4RL")
+        axios.get("http://api.giphy.com/v1/gifs/search?q=" + this.state.search + "&api_key=" + API_KEY)
         .then(response => {
             this.setState({
                 data: response.data.data
@@ -32,7 +34,13 @@ export default class SearchField extends Component {
         }else {
             return(
                 this.state.data.map((element) => {
-                    return(<img src={element.images.original.url} alt="animated"></img>)
+                    return(
+                        <StylishGifCard
+                            url = {element.images.original.url}
+                            title = {element.title}
+                            key = {element.id}
+                        ></StylishGifCard>
+                    )
                 })
             )
 
@@ -45,9 +53,13 @@ export default class SearchField extends Component {
         return (
 
             <div>
+                <h1>Search Results</h1>
                 <input id="search" onChange={this.handleChange}></input>
                 <button onClick={this.handleClick}>Submit</button>
-                {display}
+                
+                <div>
+                    {display}
+                </div>
             </div>
         )
     }
